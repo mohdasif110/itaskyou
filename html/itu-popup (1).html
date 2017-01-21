@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="itaskyou">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>I Task You | Administrator </title>
+	
+	<link href="http://itasku.bookmyhouse.co/itaskyou/theme/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="http://itasku.bookmyhouse.co/itaskyou/theme/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+	
+		
+	<!-- Bootstrap -->
+    <!-- iCheck -->
+    <link href="http://itasku.bookmyhouse.co/itaskyou/theme/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+    <!-- bootstrap-wysiwyg -->
+    <link href="http://itasku.bookmyhouse.co/itaskyou/theme/vendors/google-code-prettify/bin/prettify.min.css" rel="stylesheet">
+    <!-- Select2 -->
+    <link href="http://itasku.bookmyhouse.co/itaskyou/theme/vendors/select2/dist/css/select2.min.css" rel="stylesheet">
+    <!-- Switchery -->
+    <link href="http://itasku.bookmyhouse.co/itaskyou/theme/vendors/switchery/dist/switchery.min.css" rel="stylesheet">
+    <!-- starrr -->
+    <link href="http://itasku.bookmyhouse.co/itaskyou/theme/vendors/starrr/dist/starrr.css" rel="stylesheet">
+    <!-- Custom Theme Style -->
+    <link href="http://itasku.bookmyhouse.co/itaskyou/theme/build/css/custom.css" rel="stylesheet">
+	
+	<!--link rel="stylesheet" href="http://itasku.bookmyhouse.co/itaskyou//node_modules/angular-material/angular-material.css"-->
+	
+	<!-- End of Bootstrap-->
+	<!-- Angular --->
+	
+	<link href="http://itasku.bookmyhouse.co/itaskyou/assets/css/angular-growl.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="http://itasku.bookmyhouse.co/itaskyou/assets/css/ngDialog/ngDialog.css">
+	<link rel="stylesheet" href="http://itasku.bookmyhouse.co/itaskyou/assets/css/ngDialog/ngDialog-theme-default.css">
+	<script src="http://itasku.bookmyhouse.co/itaskyou/assets/js/angularjs/angular.min.js"></script>
+	<script src="http://itasku.bookmyhouse.co/itaskyou/assets/js/ngDialog/ngDialog.js"></script>
+	<!--script src="http://itasku.bookmyhouse.co/itaskyou//node_modules/angular-aria/angular-aria.js"></script>
+    <script src="http://itasku.bookmyhouse.co/itaskyou//node_modules/angular-animate/angular-animate.js"></script>
+    <script src="http://itasku.bookmyhouse.co/itaskyou//node_modules/angular-material/angular-material.js"></script-->
+	<script src="http://itasku.bookmyhouse.co/itaskyou/assets/js/angularjs/lib/dirPagination.js"></script>
+	<script src="http://itasku.bookmyhouse.co/itaskyou/assets/js/angularjs/angular-growl.min.js"></script>
+	<script src="http://itasku.bookmyhouse.co/itaskyou/assets/js/angularjs/ng_app.js"></script>
+	<!-- End of Angular-->
+		<script src="http://itasku.bookmyhouse.co/itaskyou/theme/vendors/jquery/dist/jquery.min.js"></script>
+	<script src="http://itasku.bookmyhouse.co/itaskyou/theme/vendors/jquery/dist/jquery.min.js"></script>
+	<script src="http://itasku.bookmyhouse.co/itaskyou/theme/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+	
+ </head>
+
+
+ <body class="nav-md" >
+ 
+
+	<div class="container body">
+      <div class="main_container">
+		<div class="col-md-3 left_col">
+          <div class="left_col scroll-view">
+			<!--div class="navbar nav_title" style="border: 0;">
+              <a href="javascript:;" class="site_title"><i class="fa fa-paw"></i> <span>I Task You</span></a>
+            </div-->
+			<div class="clearfix"></div>
+            <!-- menu profile quick info -->
+            <div class="profile">
+              <div class="profile_pic">
+                <img src="http://itasku.bookmyhouse.co/itaskyou/theme/production/images/img.jpg" alt="..." class="img-circle profile_img">
+              </div>
+              <div class="profile_info">
+                <span>Welcome,</span>
+                <h2>Mohammad Asif</h2>
+              </div>
+
+            </div>
+			<!-- /menu profile quick info -->
+			<br />
+			<!-- sidebar menu -->
+			<div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+				<div class="menu_section">
+				<h3>Menues</h3>
+				<ul class="nav side-menu">
+					
+					<li><a href="http://itasku.bookmyhouse.co/itaskyou/admin/dashboard"><i class="fa fa-circle"></i>Dashboard<span class="fa fa-chevron-down"></span></a></li>
+					
+					<li><a href="http://itasku.bookmyhouse.co/itaskyou/admin/countries"><i class="fa fa-circle"></i>Country Code<span class="fa fa-chevron-down"></span></a></li>
+					
+					<li><a href="http://itasku.bookmyhouse.co/itaskyou/admin/industorytype"><i class="fa fa-circle"></i>Industry Type<span class="fa fa-chevron-down"></span></a></li>
+					
+					<li><a href="http://itasku.bookmyhouse.co/itaskyou/admin/subindustorytype"><i class="fa fa-circle"></i>Sub Industry Type<span class="fa fa-chevron-down"></span></a></li>
+					
+					<li><a href="http://itasku.bookmyhouse.co/itaskyou/admin/tags"><i class="fa fa-circle"></i>Tags<span class="fa fa-chevron-down"></span></a></li>
+			
+					<li><a href="http://itasku.bookmyhouse.co/itaskyou/admin/api_users"><i class="fa fa-circle"></i>Users<span class="fa fa-chevron-down"></span></a></li>
+					
+					<li><a href="http://itasku.bookmyhouse.co/itaskyou/admin/groups"><i class="fa fa-circle"></i>Groups<span class="fa fa-chevron-down"></span></a></li>
+					
+					<li><a href="http://itasku.bookmyhouse.co/itaskyou/admin/moms"><i class="fa fa-circle"></i>Minutes of Meeting<span class="fa fa-chevron-down"></span></a></li>
+					
+					<li><a href="http://itasku.bookmyhouse.co/itaskyou/admin/tasks"><i class="fa fa-circle"></i>Tasks<span class="fa fa-chevron-down"></span></a></li>
+				</ul>
+			</div>
+		</div>
+			<!-- /sidebar menu -->
+			<!-- /menu footer buttons -->
+            <div class="sidebar-footer hidden-small">
+              <!--a data-toggle="tooltip" data-placement="top" title="Settings">
+                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+              </a>
+              <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+              </a>
+              <a data-toggle="tooltip" data-placement="top" title="Lock">
+                <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+              </a>
+              <a data-toggle="tooltip"  data-placement="top" title="Logout">
+                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+			 </a-->
+			</div>
+		   <!--/menu footer buttons -->
+		</div>
+
+</div>		<!--top navigation -->
+  <div class="top_nav">
+          <div class="nav_menu">
+            <nav>
+              <div class="nav toggle">
+                <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+              </div>
+              <ul class="nav navbar-nav navbar-right">
+                <li class="">
+                  <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    <img src="http://itasku.bookmyhouse.co/itaskyou/theme/production/images/img.jpg" alt="">Mohammad Asif                    <span class=" fa fa-angle-down"></span>
+                  </a>
+                  <ul class="dropdown-menu dropdown-usermenu pull-right">
+                   <li><a href="javascript:;" data-toggle="modal" data-target="#profileModal" data-whatever="@getbootstrap"> Profile</a></li>
+                    <!--li>
+                      <a href="javascript:;">
+                        <span class="badge bg-red pull-right">50%</span>
+                        <span>Settings</span>
+                      </a>
+                    </li-->
+					<li><a href="http://itasku.bookmyhouse.co/itaskyou/admin/dashboard/logout"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                  </ul>
+                </li>
+			  </ul>
+            </nav>
+          </div>
+	</div>
+<!-- /top navigation -->
+<!--- Add New industory Type ---> 			
+<div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+		  <h4 class="modal-title" id="exampleModalLabel">Update Profile</h4>
+        </div>
+        <div class="modal-body">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <a href="javascript:;" class="btn btn-primary"  ng-click="saveIndustoryType()">Save</a>
+		  
+        </div>
+      </div>
+    </div>
+	
+</div>
+<!--- End of Add New Industory Type-->  
+
+
+
+
+		<!--div id="laodView"></div-->
+		<script src="http://itasku.bookmyhouse.co/itaskyou/assets/js/angularjs/controllers/tasksController.js"></script>
+<div class="right_col" role="main" ng-controller="tasksController as data" >
+	  <div class="">
+		<div class="page-title">
+		  <div class="title_left">
+			<h3>Tasks<small></small></h3>
+			</div>
+			<div style="color:red;"><b>{{successmessage}}</b></div>
+		</div>
+		<div class="clearfix"></div>
+				<div class="table-responsive">
+                      <table class="table table-striped jambo_table bulk_action">
+                        <thead>
+                          <tr class="headings">
+                           	<th class="column-title">Tasks</th>
+							<th class="column-title">Orginator</th>
+							<th class="column-title">Reciever(s)</th>
+							<th class="column-title">Functionality Type</th>
+							<th class="column-title">Status</th>
+							<th class="column-title no-link last"><span class="nobr"><a href="javascript:;" ng-click="view_task(tag.taskID,tag.taskName)">View</a></span>
+                            </th>
+                          </tr>
+                        </thead>
+						<tbody>
+						<tr dir-paginate="tag in tags|itemsPerPage:itemsPerPage" total-items="total_count">
+						<td ng-bind="tag.taskName"></td>
+						<td style="background-color:#08D5AA; color:#fff">
+							<img style="width:50px;height:50px" src="{{tag.orginatorphoto}}" alt="..." class=" img-thumbnail img-circle">
+							<span ng-bind="tag.orginatorName">
+							</span>
+						</td>
+						<td>
+						<a href="javascript:;" ng-click="showRecievers(tag.recieverData,tag.taskName)">
+							<span ng-bind="tag.recieverData.length"></span>
+							<!--i class="fa fa-users" aria-hidden="false"></i-->
+						</a>
+						</td>
+						<td ng-bind="tag.functionalityType"></td>
+						<td ng-bind="tag.statusText"></td>
+						<td><a href="javascript:;" ng-click="view_task(tag.taskID,tag.taskName)" >View</a></td>
+						</tr>
+						<tr ng-if="tags.length==0"><td colspan="100%" align="center" ><b style="color:red;">No Tasks</b></td></tr>
+                        </tbody>
+			    </table>
+				<loading></loading>
+				<div class="pull-right">
+					<dir-pagination-controls
+					max-size="8"
+					direction-links="true"
+					boundary-links="true" 
+					on-page-change="get_records(newPageNumber)">
+					</dir-pagination-controls>
+				</div>
+	</div>
+</div>
+
+<!-- Task Detail -->
+
+<div class="modal fade"  id="taskModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+ <div class="container modal-dialog">
+	 <div class="row">
+		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
+			<div class="panel panel-info">
+            
+          <div class="panel-heading">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Title here</h4>
+      </div>
+            <div class="panel-body">
+			 <div class="row">
+              <div class="col-md-12 col-lg-12"> 
+					<table class="table table-user-information table-bordered" style="margin-bottom:0px;">
+                    <tbody>
+					
+					<tr>
+						<td><b>Status</b></td>
+						<td>Pending</td>
+					</tr>
+					<tr>
+						<td><b >Start Date</b></td>
+						<td>
+							2016-12-17 17:05:00
+						</td>
+					</tr>
+					<tr>
+						<td><b>Due Date</b></td>
+						<td>2016-12-16 17:06:00</td>
+					</tr>
+					<tr ng-if="taskDetail.taskData.revisedDate!=NULL">
+						<td><b>Revised Date:</b></td>
+						<td>
+							<span ng-bind="taskDetail.taskData.revisedDate"></span>
+						</td>
+					</tr>
+					
+					<tr>
+						<td><b>Functionality Type : </b></td>
+						<td>
+							Individual
+						</td>
+					</tr>
+					
+					<tr>
+						<td colspan="2"><b>Description: </b> 
+							<p>Fusce congue et arcu ut porta. Integer varius nec urna in egestas. Mauris magna neque, efficitur at consequat non, tristique sed justo. Mauris porta vestibulum ipsum quis mollis. Fusce facilisis nunc nec interdum vulputate. Aenean sem nisl, ultricies pulvinar lacus eu, faucibus efficitur enim. Praesent pretium pellentesque orci, id mattis eros venenatis sed.</p>
+						</td>
+					</tr>
+					<tr>
+					<td colspan="2">
+					
+					<div class="row">
+				
+					<div class="col-md-2" align="left"> 
+					<img alt="User Pic" src="http://www.w3schools.com/w3css/img_avatar3.png" class="media-object img-circle" width="60" height="60">
+					</div>
+					
+				  <div class="col-md-3" align="left" style="padding-top:22px">Mohammad Asif</div>
+                 <div class="col-md-3" align="left" style="padding-top:22px">Mobile: +91-9873878430</div>
+                 <div class="col-md-4" align="left" style="padding-top:22px">Email: <a href="#">asif@bookmyhouse.com</a></div>
+              </div>
+		</td>
+		</tr>
+		
+		<tr>
+			<td colspan="2">
+				<b>Reciever:</b>
+                 <div class="row">
+  <div class="col-md-4" align="left">
+  <div class="media">
+  <div class="media-left media-middle" style="padding-right:5px">
+  <a href="#"><img alt="User Pic" src="http://www.w3schools.com/w3css/img_avatar3.png" class="media-object img-circle" width="60" height="60"></a>
+  </div>
+  <div class="media-body">
+  <h5>Mohammad Asif</h5>
+  <h6>+91-9873878430<br>
+  <a href="#">asif@bookmyhouse.com</a>
+  </h6>
+  </div>
+  </div>
+  </div>
+  
+   <div class="col-md-4" align="left">
+  <div class="media">
+  <div class="media-left media-middle" style="padding-right:5px">
+  <a href="#"><img alt="User Pic" src="http://www.w3schools.com/w3css/img_avatar3.png" class="media-object img-circle" width="60" height="60"></a>
+  </div>
+  <div class="media-body">
+  <h5>Mohammad Asif</h5>
+  <h6>+91-9873878430<br>
+  <a href="#">asif@bookmyhouse.com</a>
+  </h6>
+  </div>
+  </div>
+  </div>
+  
+   <div class="col-md-4" align="left">
+  <div class="media">
+  <div class="media-left media-middle" style="padding-right:5px">
+  <a href="#"><img alt="User Pic" src="http://www.w3schools.com/w3css/img_avatar3.png" class="media-object img-circle" width="60" height="60"></a>
+  </div>
+  <div class="media-body">
+  <h5>Mohammad Asif</h5>
+  <h6>+91-9873878430<br>
+  <a href="#">asif@bookmyhouse.com</a>
+  </h6>
+  </div>
+  </div>
+  </div>
+  
+</div> 
+			</td>
+		</tr>	
+							
+		
+		
+			<tr>
+			<td colspan="2">
+				<b>Followers:</b>
+                <div class="row">
+  <div class="col-md-4" align="left">
+  <div class="media">
+  <div class="media-left media-middle" style="padding-right:5px">
+  <a href="#"><img alt="User Pic" src="http://www.w3schools.com/w3css/img_avatar3.png" class="media-object img-circle" width="60" height="60"></a>
+  </div>
+  <div class="media-body">
+  <h5>Mohammad Asif</h5>
+  <h6>+91-9873878430<br>
+  <a href="#">asif@bookmyhouse.com</a>
+  </h6>
+  </div>
+  </div>
+  </div>
+  
+   <div class="col-md-4" align="left">
+  <div class="media">
+  <div class="media-left media-middle" style="padding-right:5px">
+  <a href="#"><img alt="User Pic" src="http://www.w3schools.com/w3css/img_avatar3.png" class="media-object img-circle" width="60" height="60"></a>
+  </div>
+  <div class="media-body">
+  <h5>Mohammad Asif</h5>
+  <h6>+91-9873878430<br>
+  <a href="#">asif@bookmyhouse.com</a>
+  </h6>
+  </div>
+  </div>
+  </div>
+  
+   <div class="col-md-4" align="left">
+  <div class="media">
+  <div class="media-left media-middle" style="padding-right:5px">
+  <a href="#"><img alt="User Pic" src="http://www.w3schools.com/w3css/img_avatar3.png" class="media-object img-circle" width="60" height="60"></a>
+  </div>
+  <div class="media-body">
+  <h5>Mohammad Asif</h5>
+  <h6>+91-9873878430<br>
+  <a href="#">asif@bookmyhouse.com</a>
+  </h6>
+  </div>
+  </div>
+  </div>
+  
+</div>
+                 
+			</td>
+		</tr>	
+		
+		<tr>	
+			<td colspan="2"><b>Tags:</b> 
+				<span class="btn btn-default btn-sm" >accumsan</span><span class="btn btn-default btn-sm" >consectetur</span><span class="btn btn-default btn-sm" >vulputate</span><span class="btn btn-default btn-sm" >scelerisque</span><span class="btn btn-default btn-sm" >tincidunt</span><span class="btn btn-default btn-sm" >vulputate</span><span class="btn btn-default btn-sm" >habitant</span>							
+			</td>
+		</tr>
+					<tr>
+						<td colspan="2">
+							<center>
+                            <button type="button" class="btn btn-primary btn-view-popup">Task History</button>
+                            <button type="button" class="btn btn-primary btn-view-popup">Task Media</button>
+                            <button type="button" class="btn btn-primary btn-view-popup">Task Chat</button>
+							</center>
+						</td>
+					</tr>
+					
+				</tbody>
+                  </table>
+               </div>
+              </div>
+	</div>
+					<!--div class="panel-footer">
+            		 <a data-original-title="Broadcast Message" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-envelope"></i></a>
+						<span class="pull-right">
+                            <a href="edit.html" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
+							<a data-original-title="Remove this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
+						</span>
+                    </div-->
+					
+			</div>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+
+
+
+
+........
+<style>
+.btn-circle-lg {
+  width: 90px;
+  height: 90px;
+  text-align: center;
+  padding: 13px 4px 13px;
+  font-size: 30px;  
+}
+.bg-row {
+	background-color:#ddd;
+	margin-bottom:1px;
+	padding:6px 3px 6px;
+	color:#000;
+}
+</style>
+
+
+
+
+
+
+	<!-- jQuery -->
+
+    <!-- FastClick -->
+    <script src="http://itasku.bookmyhouse.co/itaskyou/theme/vendors/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="http://itasku.bookmyhouse.co/itaskyou/theme/vendors/nprogress/nprogress.js"></script>
+    <!-- bootstrap-progressbar -->
+    <script src="http://itasku.bookmyhouse.co/itaskyou/theme/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+    <!-- iCheck -->
+    <script src="http://itasku.bookmyhouse.co/itaskyou/theme/vendors/iCheck/icheck.min.js"></script>
+    <!-- bootstrap-daterangepicker -->
+	<!--script src="http://itasku.bookmyhouse.co/itaskyou/theme/js/moment/moment.min.js"></script>
+    <script src="http://itasku.bookmyhouse.co/itaskyou/theme/js/datepicker/daterangepicker.js"></script-->
+	<!-- bootstrap-wysiwyg -->
+    <script src="http://itasku.bookmyhouse.co/itaskyou/theme/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
+    <script src="http://itasku.bookmyhouse.co/itaskyou/theme/vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
+    <script src="http://itasku.bookmyhouse.co/itaskyou/theme/vendors/google-code-prettify/src/prettify.js"></script>
+    <!-- jQuery Tags Input -->
+    <script src="http://itasku.bookmyhouse.co/itaskyou/theme/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
+    <!-- Switchery -->
+    <script src="http://itasku.bookmyhouse.co/itaskyou/theme/vendors/switchery/dist/switchery.min.js"></script>
+    <!-- Select2 -->
+    <script src="http://itasku.bookmyhouse.co/itaskyou/theme/vendors/select2/dist/js/select2.full.min.js"></script>
+    <!-- Parsley -->
+    <script src="http://itasku.bookmyhouse.co/itaskyou/theme/vendors/parsleyjs/dist/parsley.min.js"></script>
+    <!-- Autosize -->
+    <script src="http://itasku.bookmyhouse.co/itaskyou/theme/vendors/autosize/dist/autosize.min.js"></script>
+    <!-- jQuery autocomplete -->
+    <script src="http://itasku.bookmyhouse.co/itaskyou/theme/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>
+    <!-- starrr -->
+    <script src="http://itasku.bookmyhouse.co/itaskyou/theme/vendors/starrr/dist/starrr.js"></script>
+    
+	<script src="http://itasku.bookmyhouse.co/itaskyou/theme/bootbox.min.js"></script>
+	<!-- Custom Theme Scripts -->
+    <script src="http://itasku.bookmyhouse.co/itaskyou/theme/build/js/custom.js"></script>
+	<!--- Add New industory Type ---> 			
+<div class="modal fade" id="adminprofilemodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title" id="exampleModalLabel">Edit Tasks</h4>
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal form-label-left">
+			
+			<span style="color:red;text-align:center">{{message}}</span>
+		  
+			<div class="form-group">
+              <label for="recipient-name" class="form-control-label">Tasks:</label>
+              
+			  <input type="text" class="form-control"  name="industorytypeedit" ng-model="industorytypeedit" required>
+			  <input type="hidden" class="form-control"  name="editsubTypeID" ng-model="editsubTypeID" required>
+				</div>
+		</form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <a href="javascript:;" class="btn btn-primary"  ng-click="updateItem()">Save</a>
+		</div>
+      </div>
+    </div>
+</div>
+<!--- End of Add New Industory Type--> 	<input type="hidden" name="admin_base_url" id="admin_base_url" value="http://itasku.bookmyhouse.co/itaskyou/admin/" />
+
+<style>	
+	#ajaxspiner {  
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+	height:100%;
+	z-index:1000;
+    background-color:white;
+    opacity: .8;
+	
+ }
+.ajax-loader {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -32px; /* -1 * image width / 2 */
+    margin-top: -32px;  /* -1 * image height / 2 */
+    display: block;     
+}
+</style>
+
+<div id="ajaxspiner">
+	<img  src="http://itasku.bookmyhouse.co/itaskyou/assets/images/gears.gif" class="ajax-loader"/>
+</div>
+
+<script>
+$(window).load(function(){
+	$('#ajaxspiner').fadeOut();
+});
+</script>	
+
+	<div class="modal fade" id="load_page_action2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		  <div class="modal-content">
+			<div class="modal-body">
+				
+				<b>Your session has expired, please re-logon.<a style="color:red" href="http://itasku.bookmyhouse.co/itaskyou/admin/dashboard/logout">Login</a></b>    
+			
+			</div>
+		 </div>
+		</div>
+	</div>
+
+<style>
+.btn-circle-lg {
+  width: 90px;
+  height: 90px;
+  text-align: center;
+  padding: 13px 4px 13px;
+  font-size: 30px;  
+}
+.bg-row {
+	background-color:#ddd;
+	margin-bottom:1px;
+	padding:6px 3px 6px;
+	color:#000;
+}
+</style><script>
+	$(document).ready(function(){
+		$('[data-toggle="tooltip"]').tooltip(); 
+	});
+</script>
+<script>
+
+$(window).load(function(){
+	
+	setTimeout(function(){checkAuth()}, 5000);
+	function checkAuth(){
+		$.ajax({ 
+			url: 'http://itasku.bookmyhouse.co/itaskyou/admin/authentication',
+			success: function (response) {
+				
+				if(response=='N'){
+					
+					$('#load_page_action2').modal();
+				}
+			}
+		});
+	  }
+  });
+
+</script>
+
+
+<style>
+.btn-view-popup {
+    background-color: #34af23;
+    border-color: #269817;
+}
+.btn-view-popup:hover, .btn-view-popup:focus {
+    background-color: #269817 !important;
+    border-color: #34af23 !important;
+}
+</style> 
+</body>
+
+</html>
