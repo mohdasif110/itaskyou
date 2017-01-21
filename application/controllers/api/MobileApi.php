@@ -3,9 +3,7 @@ date_default_timezone_set('Asia/kolkata');
 defined('BASEPATH') OR exit('No direct script access allowed');
 class MobileApi extends CI_Controller
 {
-	
-	
-	
+
 	function __construct()
     {
 		parent::__construct();
@@ -17,6 +15,7 @@ class MobileApi extends CI_Controller
 			//echo "mobile API";
 		}
 		*/
+	
 	}
 	
 	function get_otp_number_random()
@@ -28,6 +27,7 @@ class MobileApi extends CI_Controller
 	// get phone co
 	function  get_phone_country_code()
 	{
+			
 			$PhoneCountryCode			= $this->db->select('name, phonecode as code')
 										->from($this->db->dbprefix('api_country_master as CM'))
 										->where(array('CM.status'=>'1'))
@@ -40,7 +40,7 @@ class MobileApi extends CI_Controller
 			echo json_encode($PhoneCountryCode, JSON_UNESCAPED_SLASHES);
 			
 		}elseif ($this->agent->is_robot()){
-		
+			
 			$agent = $this->agent->robot();
 			
 		}elseif ($this->agent->is_mobile()){

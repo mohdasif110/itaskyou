@@ -147,7 +147,7 @@ class Group_model extends CI_model {
 			return 'nodata';
 		}
 	}
-
+	
 	//Adding group  menmber into the group .
 	function add_new_member_into_group()
 	{
@@ -263,9 +263,70 @@ class Group_model extends CI_model {
 	 
 	 
   }
+
+   	
+  // check orginator...	
+  function check_orginator_group($userID=null,$groupID=null){
+		
+		$data 	 =	 $this->db->select('G.groupID')
+						->from($this->db->dbprefix('api_groups as G'))
+						->join($this->db->dbprefix('api_group_users as GU'),'GU.groupID=G.groupID')
+						->where(array('G.status'=>'1'))
+						->where(array('G.groupID'=>$groupID,'G.createdBy'=>$userID))
+						->get()
+						->row();
 	
+	if(count($data)>0){
+		
+		return true;
+		
+		
 	
+	}else{
+		
+		return false;
+	}
+	 
+ }
+//End of check orginator.. 
+
+  // 
+  function get_group_members_data($userID=null,$groupID=null){
 	
+	$data 	 =	 $this->db->select('GROUP_CONCAT(U.userID) as memberList')
+						->from($this->db->dbprefix('api_groups as G'))
+						->join($this->db->dbprefix('api_group_users as GU'),'GU.groupID=G.groupID')
+						->join($this->db->dbprefix('api_users as U'),'GU.userID=U.userID')
+						->where(array('G.status'=>'1'))
+						->where(array('G.groupID'=>$groupID))
+						->where('GU.userID !='.$userID)
+						->get()
+						->row();
+	
+		
+	if(count($data)>0){
+	
+		return $data;
+	
+	}else{
+		
+		return array();
+	}
+	
+ }
+
+// update group members data 
+
+ function update_group_member_state($memberArr=array(),$arr=array(),$groupID =null){
+ 
+	 $this->db->where_in('userID',$memberArr);
+	 $this->db->where('groupID',$groupID);
+     $this->db->update($this->db->dbprefix('api_group_users'),$arr);
+	
+ }
+ 
+   	
+		
 }
 
 ?>

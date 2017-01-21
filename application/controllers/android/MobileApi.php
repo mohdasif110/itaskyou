@@ -17,7 +17,7 @@ class MobileApi extends CI_Controller
 		$this->load->model('group_model');
 		
 		$userID2			=	0;
-
+	
 		if(isset($_REQUEST['userID'])){
 			
 			$userID2		=	$_REQUEST['userID'];
@@ -609,8 +609,6 @@ class MobileApi extends CI_Controller
 										->where(array('status'=>'1'))
 										->get()
 										->result();
-	
-		
 		$tempArr		=	array();
 		
 		foreach($IndustoryType as $val)
@@ -621,10 +619,10 @@ class MobileApi extends CI_Controller
 												'subTypes'=>$this->get_sub_industry_type_second($val->typeID)
 											);
 		}
+		
 		echo json_encode($tempArr);
 	}
-	
-	
+
 	function get_sub_industry_type_second($typeID)
 	{
 		
@@ -634,17 +632,17 @@ class MobileApi extends CI_Controller
 										->where('status','1')
 										->get()
 										->result();
-		
+	
 		if(count($SubIndustoryType)>0){
-			
+		
 			return  $SubIndustoryType;
 		
 		 }else{
 			
 			return 'nodata';
 		 }
-	
 	}
+	
 	//End  of child andd parent industory  type..
 	
 	//update_profile	
@@ -4310,7 +4308,75 @@ function get_attached_media($actionID=null,$attachementFor=null){
 	 }
 	//Exit function......
 
+	//End...
+	function exit_team_from_group(){
+		
+		//It should be orginator...
+		if(isset($_REQUEST['userID'])){
+		
+			if($_REQUEST['userID']!=''){
+				
+					$userID 		=	$_REQUEST['userID'];
+					
+				}else{
+				
+				echo json_encode(array('action'=>'error','message'=>'Please send userID.'));
+				die();	
+			}
+		
+			}else{
+				
+				echo json_encode(array('action'=>'error','message'=>'Please send userID.'));
+				die();
+			}
 	
+		if(isset($_REQUEST['groupID'])){
+			
+			if($_REQUEST['groupID']!=''){
+				
+					$groupID 		=	$_REQUEST['groupID'];
+					
+			}else{
+				
+				echo json_encode(array('action'=>'error','message'=>'Please send groupID.'));
+				die();	
+			}
+		
+			}else{
+				
+				echo json_encode(array('action'=>'error','message'=>'Please send groupID.'));
+				die();
+			}
+			
+			
+			if($this->group_model->check_orginator_group($userID,$groupID)){
+				//Exit 
+				
+					$Groupdata	=	$this->group_model->get_group_members_data($userID,$groupID);
+					
+					if(count($Groupdata)){
+							
+							
+							
+							if($Groupdata->memberList!=''){
+							
+								$arr			=	array('exitTeam'=>'1');
+								$groupData		=	explode(",", $Groupdata->memberList);
+								echo $this->group_model->update_group_member_state($groupData,$arr,$groupID);
+							
+							}
+					}
+				
+				//Exit 
+			
+			}else{
+				
+				echo json_encode(array('action'=>'error','message'=>'it is not valid request. you are not a group creator.'));
+				die();
+			}
+	
+	}
+	//End..
 
 	
 	
