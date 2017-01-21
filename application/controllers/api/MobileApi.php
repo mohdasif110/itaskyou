@@ -1290,5 +1290,7 @@ class MobileApi extends CI_Controller
 	}
 	//End of Clean Task.
 
+	function  getdata2(){}
+	
 }
 // end of class.

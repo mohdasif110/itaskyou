@@ -1,5 +1,4 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
 /*
 |--------------------------------------------------------------------------
 | Base Site URL
@@ -23,9 +22,7 @@
 |
 */
 
-
-$config['base_url'] = 'http://localhost/ci_itaskyou/';
-
+$config['base_url'] = 'http://localhost/itaskyou/itaskyou/';
 
 /*
 |--------------------------------------------------------------------------
@@ -82,6 +79,7 @@ $config['url_suffix'] = '';
 | than english.
 |
 */
+
 $config['language']	= 'english';
 
 /*
