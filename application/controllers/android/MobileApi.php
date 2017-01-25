@@ -1,13 +1,12 @@
 <?php
 date_default_timezone_set('Asia/kolkata');
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 class MobileApi extends CI_Controller
 {
 	
 	function __construct()
     {
-		
+	
 		parent::__construct();
 		//api_request_log($_REQUEST,'android');
 		$this->load->library('user_agent');
@@ -16,18 +15,15 @@ class MobileApi extends CI_Controller
 		$this->load->model('user');
 		$this->load->model('group_model');
 		
-		$userID2			=	0;
-	
+			$userID2			=	0;
+
 		if(isset($_REQUEST['userID'])){
-			
 			$userID2		=	$_REQUEST['userID'];
 		}
 
 		if(isset($_REQUEST['orginatorID'])){
-			
 			$userID2		=	$_REQUEST['orginatorID'];
 		}
-		
 		$saveData		=	array('request'=>json_encode($_REQUEST),'url'=>$_SERVER['PATH_INFO'],'date'=>date('Y-m-d H:i:s'),'userID'=>$userID2);
 		
 		$this->db->insert($this->db->dbprefix('api_hits_call'),$saveData);
@@ -220,8 +216,10 @@ class MobileApi extends CI_Controller
 			if(isset($_REQUEST['isDataSaved'])){
 				
 			if($_REQUEST['isDataSaved']==0){
-	
-	
+				
+				
+				
+				
 				$otp_code		=	$this->get_otp_number_random();
 				//Redirect to the profile page.
 				
@@ -259,8 +257,8 @@ class MobileApi extends CI_Controller
 				}
 				
 			}
-		}	
-		
+	}	
+	
 		if($getData->deviceID!=$deviceID){
 				
 					$otp_code		=	$this->get_otp_number_random();
@@ -314,18 +312,23 @@ class MobileApi extends CI_Controller
 			}
 		
 		}else{
-			
-				$otp_code		=	$this->get_otp_number_random();
 				
+				$otp_code		=	$this->get_otp_number_random();
 				if(send_otp_message($phone_number, $country_code, $otp_code ,$app_type='android', $type='sms',$deviceID, $appKey))
 				{
-				
+					
+
 					$default_setting		=	json_encode($this->user_app_defualt_setting());
 				
 					//save phone  number and send otp  to enteree number.
 					$flagsave		=	$this->db->insert($this->db->dbprefix('api_users') , array('status'=>'-1' , 'countryPhoneCode'=>$country_code,'contactNo'=>$phone_number,'otp'=>$otp_code,'deviceID'=>$deviceID,'appKey'=>$appKey,'AppAccessFlag'=>$default_setting));
 					
+					
+/*					//save phone  number and send otp  to enteree number.
+					$flagsave		=	$this->db->insert($this->db->dbprefix('api_users') , array('status'=>'-1' , 'countryPhoneCode'=>$country_code,'contactNo'=>$phone_number,'otp'=>$otp_code,'deviceID'=>$deviceID,'appKey'=>$appKey));
 					//$NowgetData				= 		
+				
+*/
 				
 					echo json_encode(array('action'=>'available','message'=>'OTP has been sent to your phone number.', 'userData'=>array('contactNo'=>$phone_number,'countryPhoneCode'=>$country_code)));
 
@@ -338,8 +341,7 @@ class MobileApi extends CI_Controller
 		    }
 
 	}
-    //check otp 
-	
+	//check otp 
 	// Redend OTP  
 	function resend_otp()
 	{
@@ -527,13 +529,14 @@ class MobileApi extends CI_Controller
 			   
 		   }	
 		
-		$getData				= 	$this->db->select('*')->from($this->db->dbprefix('api_users'))->where(array('contactNo'=>$phone_number,'otp'=>$otp_code))->get()->row();
-		$sql = $this->db->last_query();
-		//echo $sql;
-		//echo "<pre>";
-		//print_r($getData);
-		
-		if(count($getData)>0){
+			$getData				= 	$this->db->select('*')->from($this->db->dbprefix('api_users'))->where(array('contactNo'=>$phone_number,'otp'=>$otp_code))->get()->row();
+			$sql = $this->db->last_query();
+			
+			//echo $sql;
+			//echo "<pre>";
+			//print_r($getData);
+			
+			if(count($getData)>0){
 				
 				
 				$this->db->where('contactNo',$phone_number);
@@ -609,6 +612,8 @@ class MobileApi extends CI_Controller
 										->where(array('status'=>'1'))
 										->get()
 										->result();
+	
+		
 		$tempArr		=	array();
 		
 		foreach($IndustoryType as $val)
@@ -619,10 +624,10 @@ class MobileApi extends CI_Controller
 												'subTypes'=>$this->get_sub_industry_type_second($val->typeID)
 											);
 		}
-		
 		echo json_encode($tempArr);
 	}
-
+	
+	
 	function get_sub_industry_type_second($typeID)
 	{
 		
@@ -632,20 +637,20 @@ class MobileApi extends CI_Controller
 										->where('status','1')
 										->get()
 										->result();
-	
-		if(count($SubIndustoryType)>0){
 		
+		if(count($SubIndustoryType)>0){
+			
 			return  $SubIndustoryType;
 		
 		 }else{
 			
 			return 'nodata';
 		 }
-	}
 	
+	}
 	//End  of child andd parent industory  type..
 	
-	//update_profile	
+	//update profile	
 	function upate_profile()
 	{
 		
@@ -796,8 +801,6 @@ class MobileApi extends CI_Controller
 											 );
 		
 		$numrows	=	$this->db->select('*')->from($this->db->dbprefix('api_users'))->where($conditionArr)->get()->num_rows();
-	
-		
 		
 		$data		=	array(
 									'firstName'=>$firstName,
@@ -813,9 +816,8 @@ class MobileApi extends CI_Controller
 									'created_date'=>date('Y-m-d'),
 									'updated_date'=>date('Y-m-d H:i:s')
 									);
-			
 			if($numrows==0){
-			
+				
 				echo  json_encode(array('action'=>'error', 'message'=>'Phone number is not available in databse.'));
 				return false;
 			
@@ -1029,7 +1031,7 @@ class MobileApi extends CI_Controller
 		
 			if($postForm['toUsers']==''){
 		
-				$validationArr[]			=	 array('action'=>'error', 'message'=>'Please select reciver.');
+				$validationArr[]			=	 array('action'=>'error', 'message'=>'Please slect reciver.');
 			
 			}else{
 				
@@ -1078,22 +1080,22 @@ class MobileApi extends CI_Controller
 				
 				$taskType			=	 $postForm['taskType'];
 			}
-		
-		if(isset($postForm['status'])){
+			
+			if(isset($postForm['status'])){
+			
 				$status			=	 $postForm['status'];
 			
-		}else{
-				
+			}else{
 				$status			=	 0;
-		}
+			}
 		
-		if(isset($postForm['functionalityType'])){
+			if(isset($postForm['functionalityType'])){
 			
 				$functionalityType				=	$postForm['functionalityType'];
 
-		}else{
-			
-			$functionalityType				=	0;
+			}else{
+				
+				$functionalityType				=	0;
 			
 			
 			if(count($toUsers)==1){
@@ -1500,11 +1502,13 @@ class MobileApi extends CI_Controller
 	//this can be used for the task detail api
 	function get_task_detail()
 	{
-	
-		if(isset($_REQUEST['taskID']) && $_REQUEST['taskID']!=''){
 		
+		
+		if(isset($_REQUEST['taskID']) && $_REQUEST['taskID']!=''){
+			
 			$this->load->model('tasks_model');
 			$TaskDetail					=	 $this->tasks_model->get_task_detail($_REQUEST['taskID']);
+			
 			
 			
 			$mediaAttached				=	$this->get_attached_media($_REQUEST['taskID'],'Task');
@@ -1520,7 +1524,7 @@ class MobileApi extends CI_Controller
 			
 			echo json_encode(array('action'=>'error','message'=>'Task id is not available.'));
 		}
-	
+		
 	}
 	//Get assined task to me.
 	
@@ -1557,7 +1561,7 @@ class MobileApi extends CI_Controller
 		}
 	}
 
-
+	
 	function set_task_log($taskID= 0,$userID = 0, $actions='test',$Arr=array(),$title='')
 	{
 		
@@ -1570,18 +1574,20 @@ class MobileApi extends CI_Controller
 										'title'=>$title,
 										'act'=>str_replace(" ","_",strtolower($title))
 								);
-	
-	
-		if($this->db->insert($this->db->dbprefix('api_log_task'),$saveData))
-		{
-			return  true;
-		
-		}else{
 			
-			return false;
-		}
+			if($this->db->insert($this->db->dbprefix('api_log_task'),$saveData))
+			{
+				return  true;
+			
+			}else{
+				
+				return false;
+			}
+			
+			
+			
 	}
-	
+
 	function get_status_text($status=0)
 	{
 		
@@ -1600,11 +1606,10 @@ class MobileApi extends CI_Controller
 		//Push Notification.
 	}
 
-	
 	//it is gloal.
 	function get_user_info()
 	{
-	
+		
 			$temp_error 			=	array();
 			//phone  number checking.
 		
@@ -1691,7 +1696,7 @@ class MobileApi extends CI_Controller
 			echo  json_encode(array('action'=>'error', 'message'=>'useris not exit'));
 			die();
 		}
-	
+		
 		$tempArr 						=	array();
 		$AllCount  						=  $this->tasks_model->get_all_task_count($userID,'all');	
 		
@@ -1709,28 +1714,27 @@ class MobileApi extends CI_Controller
 		$following_Count  				=   $this->tasks_model->get_all_task_count($userID	,'following');
 		
 		$tempArr['Following']		=	$following_Count;
-		
 		echo json_encode($tempArr);
+	
 	}
 
-	
 	//Home page -  
 	function get_tasks_at_home()
 	{
 		
 		$Arr			=	array();
 		
-		if(isset($_REQUEST['userID']))
-		{
-			
+		
+		if(isset($_REQUEST['userID'])){
+		
 			if($_REQUEST['userID']!=''){
-				
-				$userID					=	$_REQUEST['userID'];
+					$userID					=	$_REQUEST['userID'];
 			}
 		}
 		
 		if(isset($_REQUEST['contactNo']) && $_REQUEST['contactNo']!=''){
-		$contactNo			=		 $_REQUEST['contactNo'];
+		
+			$contactNo			=		 $_REQUEST['contactNo'];
 		
 		}else{
 			
@@ -1813,12 +1817,12 @@ class MobileApi extends CI_Controller
 		}	
 		
 		$DataTask	=	$this->tasks_model->get_tasks_at_home($userID, $tabval,$functionalityTypeID);
-	
+		
 		//echo "<pre>";
 		//print_r($DataTask);
-		//exit;
-	
-	if($tabval=='allnew'){
+		
+		
+if($tabval=='allnew'){
 	
 			$tempData 			=	array();
 			
@@ -1871,8 +1875,8 @@ class MobileApi extends CI_Controller
 			echo json_encode(array("action"=>'success','auth'=>'true','message'=>'success' ,'dataValue'=>$DataTask));
 			die();
 	}
-
-}
+	
+	}
 	
 	//check local contact  number. 
 	function get_local_marked_contact_number()
@@ -2807,8 +2811,7 @@ class MobileApi extends CI_Controller
 											'createdBy'=>$createdBy,
 											'status'=>'1'
 										);
-		
-		
+			
 			// check group  already exist.
 			if($this->db->insert($this->db->dbprefix('api_groups'),$saveData))
 			{
@@ -2836,7 +2839,6 @@ class MobileApi extends CI_Controller
 													'data'=>$saveData
 												);
 					
-					
 					$reciepient				   =   	explode(",",$groupUsers);
 					
 					//echo "<pre>";
@@ -2844,24 +2846,13 @@ class MobileApi extends CI_Controller
 					
 					send_push_notification_android_fcm($reciepient, $Data);
 					
-					$saveDataref			=	array(
-												'taskName'=>'',
-												'orginatorID'=>$createdBy,
-												'recieverID'=>$groupUsers,
-												'funtionalityType'=>'3',
-												'actionType'=>'Group',
-												'taskIN'=>'Group',
-												'funcationlityTypeID'=>$groupID,
-												'status'=>0,
-											);
-					
-					$this->group_model->save_reff_as_action($saveDataref);
-					
 					echo json_encode(array('action'=>'success', 'message'=>'Group has been created successfully.', 'data'=>$saveData));
+					
+					
+				
+				}
 			
-			}
-		
-		}else{
+			}else{
 					echo json_encode(array('action'=>'error', 'message'=>'database issue please contact to the administrator.'));
 			
 			}
@@ -2969,9 +2960,9 @@ class MobileApi extends CI_Controller
 			echo json_encode(array('action'=>'error', 'message'=>'Please send device id.'));
 			die();
 		}
-	
+		
 		//Start Auth Authentication on. 
-		//Required- userID, DeviceID,contactNo.
+			// Required- userID, DeviceID,contactNo.
 		//End of Authentication.. 
 		
 		echo json_encode(array("action"=>'success',"groupData"=>$this->group_model->get_group_detail($groupID,$userID)));
@@ -3072,11 +3063,10 @@ class MobileApi extends CI_Controller
   }
   */
 
-   // Add End of the participant..	 
+  // Add End of the participant..	 
    function add_members_in_a_group()
    {
-		
-		if(isset($_REQUEST['groupID'])){
+	   if(isset($_REQUEST['groupID'])){
 		
 			if($_REQUEST['groupID']!=''){
 			
@@ -3113,11 +3103,12 @@ class MobileApi extends CI_Controller
 				die();
 		}
 	
-	
+		
+		
 		if(isset($_REQUEST['participantID'])){
 			
 			if($_REQUEST['participantID']!=''){
-				
+			
 				$participantID 	=	 $_REQUEST['participantID'];
 			
 			}else{
@@ -3136,7 +3127,7 @@ class MobileApi extends CI_Controller
 		echo json_encode(array('action'=>'success','message'=>"Participant has been added succesfully."));
 	}
     //End of the add participant....
-	
+
 	//Create Task.
 	function create_task_in_a_group()
 	{
@@ -3145,14 +3136,14 @@ class MobileApi extends CI_Controller
 		$validationArr		=  array();
 		
 		if(isset($_REQUEST['groupID']) && $_REQUEST['groupID']!=''){
-		
+			
 			$groupID					=	$_REQUEST['groupID'];
 		
 		}else{
 			
 			$validationArr[]			=	"Please send group  id";
 	   }
-	
+		
 		if(isset($postForm['taskName'])){
 			
 			if($postForm['taskName']==''){
@@ -3341,7 +3332,6 @@ class MobileApi extends CI_Controller
 											'taskTags'=>$TagsJson,
 											'status'=>$status,
 											'funtionalityType'=>'3',
-											'taskIN'=>'Group',
 											'funcationlityTypeID'=>$groupID,
 											'allotmentDate'=>$postForm['startDate'],
 											//'allotmentDate'=>date('Y-m-d'),
@@ -3416,8 +3406,9 @@ class MobileApi extends CI_Controller
 			}
 		}
 	}
-
-	//Clean your Taks...
+	
+	
+	//Clean your Taks.
    function clean_all_tasks()
    {
 		$this->db->truncate($this->db->dbprefix('api_tag_task'));
@@ -3428,12 +3419,11 @@ class MobileApi extends CI_Controller
 		$this->db->truncate($this->db->dbprefix('api_user_tags'));
 		//$this->db->truncate($this->db->dbprefix('api_users'));
 		echo "Clear tasks data";
-   
    }
-   //End of Clean Task...
+   //End of Clean Task.
 	
 	function fcm_notification_test(){
-		
+	
 		if(isset($_REQUEST['registerToken'])){
 		
 			if($_REQUEST['registerToken']!=''){
@@ -3470,12 +3460,12 @@ class MobileApi extends CI_Controller
 		*/
 		
 		$Data					=	array('message'=>'Hello BMH FCMoioooo.','taskID'=>1,'funType'=>'team','largeIcon'	=> 'small_icon','sound'=>0);
+		
 		echo send_push_notification_android_fcm($array, $Data);
 		die();
 	
 	}
 	
-	//....Group......
 	function mail_test()
 	{
 		
@@ -3688,10 +3678,11 @@ function get_attached_media($actionID=null,$attachementFor=null){
 			die();
 		}
 		
+		
 		if(isset($_REQUEST['favStatus'])){
-			
+		
 			if($_REQUEST['favStatus']!=''){
-			
+				
 				$favStatus		=	$_REQUEST['favStatus'];
 			
 			}else{
@@ -3753,18 +3744,16 @@ function get_attached_media($actionID=null,$attachementFor=null){
 				
 				}
 				
-			}
-			
+			}	
 		}
-		
 	}
 
 	//Re Assign Task..
 	function re_assign_api()
 	{
 	
-		$oldAssine						=  	array();
-		$reassignTo						= 	array();		
+		$oldAssine						=  array();
+		$reassignTo						= array();		
 		
 		if(isset($_REQUEST['deviceID']))
 		{
@@ -3943,9 +3932,7 @@ function get_attached_media($actionID=null,$attachementFor=null){
 			//Send Push Notification  to  the server
 			
 			send_push_notification_android_fcm($reciepient, $Data,'development');
-			
 			$this->set_task_log($taskID , $userID,$action, $TaskDetail,'New Task Created');
-			
 			echo json_encode(array('action'=>'success','message'=>'task has been re assign succesfully.'));
 			//Push Notificatio will send to the all the members... 	
 			die();
@@ -4035,16 +4022,15 @@ function get_attached_media($actionID=null,$attachementFor=null){
 	
 	$this->map_media_with_task($attachementIDS,$userID,$taskID,$attachementFor='Task');
  }	
+ 
+ ///Group Home screen Listing.. 
 
-///Group Home screen Listing.. 
-
-  function get_home_group(){
+ function get_home_group(){
 	
 	$ArrError			=	array();
 	
 	if(isset($_REQUEST['deviceID']))
 	{
-		
 		if($_REQUEST['deviceID']!=''){
 	
 			$deviceID		=	 $_REQUEST['deviceID'];
@@ -4085,9 +4071,10 @@ function get_attached_media($actionID=null,$attachementFor=null){
 		echo json_encode(array('action'=>'success','message'=>'success','groupData'=>$data));	
 
 }
-	
-	// Group home screen.. 
-	//Group home screen.. 
+
+// Group home screen.. 
+
+ //Group home screen.. 
 	function  change_group_params_value()
 	{
 		
@@ -4095,9 +4082,9 @@ function get_attached_media($actionID=null,$attachementFor=null){
 		
 		if(isset($_REQUEST['paramName']))
 		{
-			
+		
 			if($_REQUEST['paramName']!=''){
-			
+				
 				$paramName			=  $_REQUEST['paramName'];	
 			
 			}else{
@@ -4131,8 +4118,7 @@ function get_attached_media($actionID=null,$attachementFor=null){
 		{
 			
 			if($_REQUEST['userID']!=''){
-				
-					$userID			=  $_REQUEST['userID'];	
+				$userID			=  $_REQUEST['userID'];	
 				
 				}else{
 					
@@ -4182,11 +4168,11 @@ function get_attached_media($actionID=null,$attachementFor=null){
 			echo  json_encode(array('action'=>'error','message'=>$errorArr));
 			die();
 		}
-	
+		
 		//groupName
 		//groupPhoto
 		//groupDescription
-		
+		 
 		 switch($paramName)
 		 {
 			case 'groupName':
@@ -4199,13 +4185,11 @@ function get_attached_media($actionID=null,$attachementFor=null){
 				die();
 			}
 			*/
-			
 			$updateArr			=	array(
 										    'groupName'=>$paramValue,	
 											'modifiedDate'=>date('Y-m-d H:i:s')	
 										);
 			$message				=	"group name has changed.";
-			
 			break;
 			case 'groupDescription':
 				$updateArr		=	array(
@@ -4220,30 +4204,20 @@ function get_attached_media($actionID=null,$attachementFor=null){
 									   'modifiedDate'=>date('Y-m-d H:i:s')	
 			
 						);
-			$message				=	"group photo has changed.";	
+			
+			$message				=	"group photo has changed.";			
 			break;
-			case 'exitgroup':
-				
-				echo json_encode(array('action'=>'error','message'));	
-			
-			break;
-			
-			
-			
-			case 'addparticipant':
-			//comma separated value..
-			$paramValueArr			=	explode(",",$paramValue);
-			exit();
 			default: 
 			echo json_encode(array('action'=>'error','message'=>'please send valid paramName'));
 			die();
-		
-		}
+	}
 	
 		$this->db->where(array('groupID'=>$groupID));
 		
 		if($this->db->update($this->db->dbprefix('api_groups'), $updateArr)){
+		
 			//getGroup members:-  
+			
 			$groupdetail		=	$this->group_model->get_group_detail($groupID,$userID);
 			
 		if(count($groupdetail)==0){
@@ -4272,45 +4246,43 @@ function get_attached_media($actionID=null,$attachementFor=null){
 														'data'=>$groupdetail
 												 );
 			
-			
 			send_push_notification_android_fcm($reciepient, $Data);
-			
 			echo json_encode(array('action'=>'success','message'=>'value has been updated succesfully.'));
 			die();
 		
 		}
-		
+	 
+	 }
+  }
+  
+  
+  
+  	function user_app_defualt_setting($userID	= null){
+	
+			$defualtSetting 		=	array(
+											
+												'as_orginator'=>array(
+																'task'=>array(
+																	    're_assign'=>true,
+																		'ratting'=>true,
+																 )
+												),
+											
+												'as_reciever'=>array(
+																	'task'=>array(
+																		're_assign'=>true,
+																		'ratting'=>false,	
+																	 )
+												)
+							);
+			
+				
+				return  $defualtSetting;
+	
 	}
 	
-  }
-
-	  function user_app_defualt_setting($userID	= null)
-	  {
-				
-				$defualtSetting 			=	array(
-												
-												'as_orginator'=>array(
-																	'task'=>array(
-																			're_assign'=>true,
-																			'ratting'=>true,
-																	 )
-													),
-												
-												'as_reciever'=>array(
-																		'task'=>array(
-																			're_assign'=>true,
-																			'ratting'=>false,	
-																		 )
-													)
-					);
-				
-				return $defualtSetting;
-	 }
-	//Exit function......
-
 	//End...
 	function exit_team_from_group(){
-	
 	
 		//It should be orginator...
 		if(isset($_REQUEST['userID'])){
@@ -4330,8 +4302,7 @@ function get_attached_media($actionID=null,$attachementFor=null){
 				echo json_encode(array('action'=>'error','message'=>'Please send userID.'));
 				die();
 			}
-		
-		
+	
 		if(isset($_REQUEST['groupID'])){
 			
 			if($_REQUEST['groupID']!=''){
@@ -4350,36 +4321,42 @@ function get_attached_media($actionID=null,$attachementFor=null){
 				die();
 			}
 			
-			
+			$arr					=	array('exitTeam'=>'1');
+			//$groupData		=	explode(",", $Groupdata->memberList);
+			$groupData			=	array($userID);
+			if($this->group_model->update_group_member_state($groupData,$arr,$groupID)){
+				echo json_encode(array('action'=>'success','message'=>'Team has been exit from the group.'));
+				die();
+			}
+		
+			/*
 			if($this->group_model->check_orginator_group($userID,$groupID)){
 				//Exit 
 				
 					$Groupdata	=	$this->group_model->get_group_members_data($userID,$groupID);
 					
 					if(count($Groupdata)){
-							
+						
 							if($Groupdata->memberList!=''){
-								
+							
 								$arr			=	array('exitTeam'=>'1');
 								$groupData		=	explode(",", $Groupdata->memberList);
 								
 								if($this->group_model->update_group_member_state($groupData,$arr,$groupID)){
+									
+										echo json_encode(array('action'=>'success','message'=>'Team has been exit from the group.'));
 								
-								echo json_encode(array('action'=>'success','message'=>'Team has been exit from the group.'));
 								
 								}
 						
 							}
 					}
-				
-					//Exit 
-			
+				//Exit 
 			}else{
-				
 				echo json_encode(array('action'=>'error','message'=>'it is not valid request. you are not a group creator.'));
 				die();
 			}
-	
+			*/	
 	}
 	//End..
 
@@ -4422,33 +4399,47 @@ function get_attached_media($actionID=null,$attachementFor=null){
 				echo json_encode(array('action'=>'error','message'=>'Please send groupID.'));
 				die();
 			}
-			
-			
-			if($this->group_model->check_orginator_group($userID,$groupID)){
-					//Exit 
+		
+		
+				$arr			=	array('deleteTeam'=>'1');
+				//$groupData	=	explode(",", $Groupdata->memberList);
+				$groupData		=	array($userID);
+				if($this->group_model->update_group_member_state($groupData,$arr,$groupID)){
+					echo json_encode(array('action'=>'success','message'=>'Team has been deleted from the group.'));
+					die();	
+				}
+		
+			/*
+				if($this->group_model->check_orginator_group($userID,$groupID)){
+				//Exit 
 				$Groupdata	=	$this->group_model->get_group_members_data($userID,$groupID);
 				if(count($Groupdata)){
-				
+					
 					if($Groupdata->memberList!=''){
 					
 								$arr			=	array('deleteTeam'=>'1');
 								$groupData		=	explode(",", $Groupdata->memberList);
 								if($this->group_model->update_group_member_state($groupData,$arr,$groupID)){
 									
-							     	echo json_encode(array('action'=>'success','message'=>'Team has been deleted from the group.'));
+										echo json_encode(array('action'=>'success','message'=>'Team has been deleted from the group.'));
+								
+								
 								}
 					}
+					
 				}
 				//Exit 
-			
 			}else{
-			
 				echo json_encode(array('action'=>'error','message'=>'it is not valid request. you are not a group creator.'));
 				die();
 			}
+		*/
+		
+	
 	}
-	//End..
-
+	//End..	
+  
+	
 	function  marked_group_admin()
 	{
 	
@@ -4533,16 +4524,15 @@ function get_attached_media($actionID=null,$attachementFor=null){
 			$this->db->where(array('groupID'=>$groupID,'userID'=>$val));		
 			if($this->db->update($this->db->dbprefix('api_group_users'), $updateArr)){
 				
-				
+			
 			}
 	    }
 	
 		echo json_encode(array('action'=>'success','message'=>'mark admin has been done succesfully.'));
 		die();	
 	}
-
-	
-	
-	
+  
+  
+  
 }
 //End of class.
