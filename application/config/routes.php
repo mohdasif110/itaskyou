@@ -114,5 +114,7 @@ $route['admin/moms/get_records'] 		= 	'Admin/moms/get_records';
 $route['admin/moms/get_mom_detail'] 		= 	'Admin/moms/get_mom_detail';
 //End  MOMS
 
+$route['chat/send_message'] 		= 	'chat/itaskyou/send_message';
+
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

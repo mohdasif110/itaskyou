@@ -124,7 +124,9 @@ class Group_model extends CI_model {
 										'U.status',
 										'U.countryPhoneCode',
 										'ITM.type',
-										'SITM.subType'		
+										'SITM.subType',	
+										'GU.exitTeam',
+										'GU.deleteTeam'	
 									);
 		
 		$data 	 = $this->db->select($selector)
@@ -303,26 +305,24 @@ class Group_model extends CI_model {
 						->get()
 						->row();
 	
-		
 	if(count($data)>0){
-	
+		
 		return $data;
 	
 	}else{
 		
 		return array();
 	}
-	
- }
+
+}
 
 // update group members data 
 
  function update_group_member_state($memberArr=array(),$arr=array(),$groupID =null){
- 
+	
 	 $this->db->where_in('userID',$memberArr);
 	 $this->db->where('groupID',$groupID);
-     $this->db->update($this->db->dbprefix('api_group_users'),$arr);
-	
+	 if($this->db->update($this->db->dbprefix('api_group_users'),$arr)){ return true ;}else{ return false;}
  }
  
    	
