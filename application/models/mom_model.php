@@ -153,14 +153,43 @@ Class Mom_model extends CI_Model
 			return true;
 		
 		}else{
+
+			return false;
+		}
+	}
+	
+	
+	//save mom... 
+	function save_mom($saveData=array(),$participant=null){
+		
+		if($this->db->insert($this->db->dbprefix('api_mom'), $saveData)){
+		
+			 $momID					=	$this->db->insert_id();
+			 $participant			=	explode(",",$participant);	
+			
+				if(count($participant)>0){
+				
+					foreach($participant as $val){
+						$req		=	array('userID'=>$val,'momID'=>$momID);
+						$this->add_participant($req);
+					}
+				}
+			
+			
+			return true;
+		
+		}else{
 			
 			return false;
 		}
 	}
-
-	//Adding.................
-	function add_mom_task(){}
-	//End Adding..................
+	// end of save mom..
+	
+	// Adding mom participant.
+	
+	// End  of adding participant.. 
+	
+	
 	
 }
 ?>

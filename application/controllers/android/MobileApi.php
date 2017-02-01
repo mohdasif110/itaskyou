@@ -6,7 +6,7 @@ class MobileApi extends CI_Controller
 	
 	function __construct()
     {
-	
+		
 		parent::__construct();
 		//api_request_log($_REQUEST,'android');
 		$this->load->library('user_agent');
@@ -14,8 +14,9 @@ class MobileApi extends CI_Controller
 		$this->load->model('tasks_model');
 		$this->load->model('user');
 		$this->load->model('group_model');
+		$this->load->model('mom_model');
 		
-			$userID2			=	0;
+		$userID2			=	0;
 
 		if(isset($_REQUEST['userID'])){
 			$userID2		=	$_REQUEST['userID'];
@@ -4489,6 +4490,7 @@ function get_attached_media($actionID=null,$attachementFor=null){
 			}
 		
 		}else{
+			
 				echo json_encode(array('action'=>'error','message'=>'Please send mark_as_admin_user_ids'));
 				die();
 		}
@@ -4509,12 +4511,11 @@ function get_attached_media($actionID=null,$attachementFor=null){
 				echo json_encode(array('action'=>'error','message'=>'Please send groupID'));
 				die();
 		}
-			
+		
 		$userList		=	explode(",",$mark_as_admin_user_ids);
 		$flag			=	false;
 		
 		foreach($userList as $val){
-			
 			
 			$updateArr				=	array(
 											'is_admin'=>'1',
@@ -4523,16 +4524,124 @@ function get_attached_media($actionID=null,$attachementFor=null){
 			
 			$this->db->where(array('groupID'=>$groupID,'userID'=>$val));		
 			if($this->db->update($this->db->dbprefix('api_group_users'), $updateArr)){
-				
 			
 			}
 	    }
-	
+		
 		echo json_encode(array('action'=>'success','message'=>'mark admin has been done succesfully.'));
 		die();	
 	}
-  
-  
+	
+	##########################################  MOM START ###############################################################################
+	
+	function  create_mom(){
+		
+		if(isset($_REQUEST['userID'])){
+			
+			if($_REQUEST['userID']!=''){
+				
+				$userID 			=	$_REQUEST['userID'];
+					
+			}else{
+				
+				echo json_encode(array('action'=>'error','message'=>'Please send userID'));
+				die();
+			}
+			
+		}else{
+				echo json_encode(array('action'=>'error','message'=>'Please send userID'));
+				die();
+		}
+		
+		if(isset($_REQUEST['deviceID'])){
+			
+			if($_REQUEST['deviceID']!=''){
+					$deviceID 			=	$_REQUEST['deviceID'];
+			
+			}else{
+				
+				echo json_encode(array('action'=>'error','message'=>'Please send deviceID'));
+				die();
+			}
+		
+		}else{
+				
+				echo json_encode(array('action'=>'error','message'=>'Please send deviceID'));
+				die();
+		}
+	
+		if(isset($_REQUEST['momName'])){
+			
+			if($_REQUEST['momName']!=''){
+			
+				$momName 			=	$_REQUEST['momName'];
+			
+			}else{
+			
+				echo json_encode(array('action'=>'error','message'=>'Please send momName'));
+				die();
+			}
+		
+		}else{
+			echo json_encode(array('action'=>'error','message'=>'Please send momName'));
+			die();
+		}
+		
+		if(isset($_REQUEST['momDescription'])){
+			
+			if($_REQUEST['momDescription']!=''){
+			
+				$momDescription 			=	$_REQUEST['momDescription'];
+			
+			}else{
+			
+				echo json_encode(array('action'=>'error','message'=>'Please send momDescription'));
+				die();
+			}
+		
+		}else{
+			
+			echo json_encode(array('action'=>'error','message'=>'Please send momDescription'));
+			die();
+		}
+	
+	if(isset($_REQUEST['momParticipant'])){
+	
+			if($_REQUEST['momParticipant']!=''){
+				
+				$momParticipant 			=	$_REQUEST['momParticipant']; //comma separated user ids.
+			
+			}else{
+				
+				echo json_encode(array('action'=>'error','message'=>'Please send mom participant'));
+				die();
+			}
+		
+		}else{
+			
+			echo json_encode(array('action'=>'error','message'=>'Please send mom participant'));
+			die();
+		}
+		
+	
+		$saveData		=	array(
+									'momName'=>$momName,
+									'momDescription'=>$momDescription,
+									'createdDate'=>date('Y-m-d H:i:s'),
+									'createdBy'=>$userID	
+								 );
+		
+		
+		if($this->mom_model->save_mom($saveData,$momParticipant)){
+			
+			echo json_encode(array('action'=>'success','message'=>'mom has been created'));
+			die();
+		
+		}
+	
+	}
+	
+	##########################################  MOM END #################################################################################
   
 }
 //End of class.

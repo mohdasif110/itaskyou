@@ -1,19 +1,17 @@
 <script src="<?php echo base_url('assets/js/angularjs/controllers') ?>/usersController.js"></script>
 <div class="right_col" role="main" ng-controller="usersController as vm" >
-    <div class="">
-	
-		<div class="page-title">
+          <div class="">
+		 
+		 <div class="page-title">
             
 			<div class="title_left">
                <h3><?php echo $page_title; ?><small></small></h3>
-			</div>
+				</div>
 			<div growl></div>
 			<!--div class="pull-right">
 					<button class="btn btn-primary" type="button"   ng-click="newItem()"  data-whatever="@getbootstrap" >Add New <?php echo $page_title; ?></button>
 			</div-->
 		</div>
-		
-		
 		<div class="clearfix"></div>
 		<div class="table-responsive">
 				<table class="table table-striped jambo_table bulk_action">
@@ -72,6 +70,7 @@
 						<tr ng-if="industoryTypes.length==0"><td colspan="100%" align="center" ><b style="color:red;">No <?php echo $page_title; ?></b></td></tr>
                         </tbody>
                 </table>
+				
 				<div class="pull-right">
 				<dir-pagination-controls
 					max-size="5"

@@ -4,7 +4,6 @@
 		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
 			<div class="panel panel-info">
             <div class="panel-heading">
-			
 				<h3 class="panel-title">
 				<b>{{userInfo.firstName}} {{userInfo.lastName}}</b>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -74,15 +73,13 @@
       </div>
     </div>
 </div>
-
-
+<!-- User setting pop up --->
 <div class="modal fade" id="userSettings" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 <div class="container modal-dialog">
 	 <div class="row">
 		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
 			<div class="panel panel-info">
             <div class="panel-heading">
-			
 				<h3 class="panel-title">
 				<b>{{userInfo.firstName}} {{userInfo.lastName}}</b>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -92,54 +89,47 @@
 		  </div>
          <div class="panel-body">
 			<!-- {"as_orginator":{"task":{"re_assign":true,"ratting":true}},"as_reciever":{"task":{"re_assign":true,"ratting":false}}} -->
-			
-			<ul>
-				
-				<li ng-repeat=" (k,val) in AppAccessFlag">
-					
-						<span ng-bind="k"></span>
+			<ul id="settingCheckbox" >
+				<li ng-repeat=" (k1,v1) in AppAccessFlag">
+					<span ng-bind="k1"></span>
 						<ul>
-							<li ng-repeat="(setkey ,setval) in val.task" >
+							<li ng-repeat="(k2 ,v2) in v1">
 								<span>
-									<span ng-bind="setkey"></span>
-									<input type="checkbox"  ng-checked="{{setval}}" />{{setval}} 
+									<span ng-bind="k2"></span>
+										<ul>
+										<li ng-repeat="(k3,v3) in v2 ">
+										<b>{{k3}}:</b> <input type="checkbox" name="{{k1}}.{{k2}}.{{k3}}" ng-modal="{{k1}}.{{k2}}.{{k3}}"   ng-checked="{{v3}}" />
+										</li>
+									</ul>
 								</span>
 							</li>
 						</ul>
 				</li>
-			</ul>
+		</ul>
 		</div>
-		
-			<!--div class="panel-footer">
-							 <a data-original-title="Broadcast Message" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-envelope"></i></a>
-								<span class="pull-right">
-									<a href="edit.html" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
-									<a data-original-title="Remove this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
-								</span>
-			</div-->
-		
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+					<a href="javascript:;" class="btn btn-primary"  ng-click="updateSettings()">Save</a>
+			</div>
 		</div>
-      
-		</div>
-     
+	</div>
 	 </div>
-   
    </div>
-
 </div>
-
+<!-- end of user setting pop up -->
 <style>
-.btn-circle-lg {
-  width: 90px;
-  height: 90px;
-  text-align: center;
-  padding: 13px 4px 13px;
-  font-size: 30px;  
-}
-.bg-row {
-	background-color:#ddd;
-	margin-bottom:1px;
-	padding:6px 3px 6px;
-	color:#000;
-}
+	.btn-circle-lg {
+	  width: 90px;
+	  height: 90px;
+	  text-align: center;
+	  padding: 13px 4px 13px;
+	  font-size: 30px;  
+	}
+	.bg-row {
+		background-color:#ddd;
+		margin-bottom:1px;
+		padding:6px 3px 6px;
+		color:#000;
+	}
 </style>
+

@@ -122,17 +122,47 @@ itaskyou.controller('usersController', function($scope,$http, admin_base_url,gro
 	//User Setting data.
 	$scope.userSetting				=	function($tag)
 	{
-		
 		var  userID 				=	$tag.userID;
 		$scope.userInfo				=	$tag;
 		$scope.AppAccessFlag		=	$tag.AppAccessFlag;
 		
+		var tempObj					=	new Array();
+		
+
+		
 		$('#userSettings').modal();
+	}
+
+	//End of user setting data... 
+
+	$scope.updateSettings			=	function(){
+	
+	    var tempArr					= {};
+	
+		$("#settingCheckbox").find("input:checkbox").each(function(i,v) {
+			
+			//alert($(this).attr('name'));
+			var name =  $(this).attr('name');
+			
+			if($(this).attr('checked')) {
+			
+				tempArr[name]		=	  true;
+					
+			} else {
+				
+				tempArr[name]		=	   false	
+			}
+		
+		
+		});
+		
+		console.log(tempArr);
 	
 	}
 	
-	//End of user setting data... 
-	
-	
+	$scope.makeSettingModel			=	function($key1 , $key2){
+		
+		return  $key1+'_'+$key2;
+	}
 	
 });

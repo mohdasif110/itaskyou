@@ -34,9 +34,7 @@ class Chat_model extends CI_model {
 				
 				return false;
 			}
-			
-			
-			
+		
 		}else{
 			
 			return false;
@@ -44,13 +42,25 @@ class Chat_model extends CI_model {
 		
 	}
 
-	// save recipient... 
-	function  save_recipient(){
+	
+	function read_message($where=array()){
+	
+		$where = "(R.senderID='".$where['userID']."'or R.reciversID='".$where['userID']."')";
 		
-		
-		
-	}	
-	// end save recipient...
+		$messages					= $this->db->select('R.senderID, R.reciversID,M.chatID,M.message as messageBody')
+									    ->from($this->db->dbprefix('chat_recievers R'))
+										->join($this->db->dbprefix('chat_master M'),'M.chatID=R.chatID')
+										->where($where)
+										->group_by('M.chatID')
+										->order_by('M.dateTime asc')
+										->get()
+										->result();
+			
+			
+			echo "<pre>";
+			print_r($messages);
+	
+	}
 	
 }
 
