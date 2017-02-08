@@ -1,6 +1,6 @@
 	var itaskyou = angular.module("itaskyou",  ['angularUtils.directives.dirPagination','angular-growl','ngDialog']);
-	itaskyou.constant('admin_base_url', 'http://localhost/ci_itaskyou/admin/');
-	itaskyou.constant('rootUrl', 'http://localhost/ci_itaskyou/');
+	itaskyou.constant('admin_base_url', 'http://localhost/itaskyou/itaskyou/admin/');
+	itaskyou.constant('rootUrl', 'http://localhost/itaskyou/itaskyou/admin/');
 	//Dashboard directive--- 
 
 	itaskyou.config(['ngDialogProvider', function (ngDialogProvider){

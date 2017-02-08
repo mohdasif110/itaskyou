@@ -30,9 +30,9 @@ Class Mom_model extends CI_Model
 	}
 
 	//momID,deviceID,contactNo, phoneCountryCode
-	function  add_participant($req){
+	function  add_participant($req, $type='a',$is_mom_creator=0){
 			
-		 $data			=	array('userID'=>$req['userID'],'momID'=>$req['momID']);
+		 $data			=	array('userID'=>$req['userID'],'momID'=>$req['momID'],'participantAs'=>$type,'is_mom_creator'=>$is_mom_creator);
 		
 		if($this->db->insert($this->db->dbprefix('api_mom_participant'), $data)){
 		
@@ -158,38 +158,75 @@ Class Mom_model extends CI_Model
 		}
 	}
 	
-	
 	//save mom... 
-	function save_mom($saveData=array(),$participant=null){
+	function save_mom($saveData=array(),$participant=null, $momParticipantCC=null){
 		
-		if($this->db->insert($this->db->dbprefix('api_mom'), $saveData)){
-		
-			 $momID					=	$this->db->insert_id();
-			 $participant			=	explode(",",$participant);	
+			if($this->db->insert($this->db->dbprefix('api_mom'), $saveData)){
+			
+				$momID					=	$this->db->insert_id();
+				$participant			=	explode(",",$participant);
+				$momParticipantCC			=	explode(",",$momParticipantCC);				
+			
+				$req		=	array('userID'=>$saveData['createdBy'],'momID'=>$momID);
+				$this->add_participant($req,'a','1');// participants
 			
 				if(count($participant)>0){
-				
+					
 					foreach($participant as $val){
-						$req		=	array('userID'=>$val,'momID'=>$momID);
-						$this->add_participant($req);
+						
+						if($saveData['createdBy']!=$val){
+							
+							$req		=	array('userID'=>$val,'momID'=>$momID);
+							$this->add_participant($req,'a','0');// participants
+						
+						}
+						
 					}
 				}
 			
-			
-			return true;
+				if(count($momParticipantCC)>0){
+					
+					foreach($momParticipantCC as $val){
+						
+						if($saveData['createdBy']!=$val){
+							
+							$req		=	array('userID'=>$val,'momID'=>$momID);
+							$this->add_participant($req,'c','0');// participants
+						
+						}
+					}
+				}
+				
+				return true;
 		
 		}else{
 			
 			return false;
+		
 		}
 	}
-	// end of save mom..
-	
-	// Adding mom participant.
-	
-	// End  of adding participant.. 
+	//End of save mom.
 	
 	
+
+	function add_mom_observations($saveData)
+	{
+		
+		if($this->db->insert($this->db->dbprefix('api_mom_observation'), $saveData)){
+		
+			return true;
+		
+		}else{
+		
+			return false;
+		}
+	}
+	
+	function  add_mom_tasks(){}
+	
+	function  get_mom_list(){}
+	
+	function  get_mom_details(){}
 	
 }
 ?>

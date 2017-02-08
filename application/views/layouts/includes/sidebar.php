@@ -31,7 +31,10 @@
 					<li><a href="<?php echo base_url('admin/subindustorytype'); ?>"><i class="fa fa-circle"></i>Sub Industry Type<span class="fa fa-chevron-down"></span></a></li>
 					
 					<li><a href="<?php echo base_url('admin/tags'); ?>"><i class="fa fa-circle"></i>Tags<span class="fa fa-chevron-down"></span></a></li>
-			
+
+					<li><a href="<?php echo base_url('admin/organizations'); ?>"><i class="fa fa-circle"></i>Organizations<span class="fa fa-chevron-down"></span></a></li>
+
+					
 					<li><a href="<?php echo base_url('admin/api_users'); ?>"><i class="fa fa-circle"></i>Users<span class="fa fa-chevron-down"></span></a></li>
 					
 					<li><a href="<?php echo base_url('admin/groups'); ?>"><i class="fa fa-circle"></i>Groups<span class="fa fa-chevron-down"></span></a></li>

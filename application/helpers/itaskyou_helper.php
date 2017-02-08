@@ -355,7 +355,72 @@ if(!function_exists('send_sms_apk'))
 			curl_close($curl_handle);
 	 }
 	 
-	}		
+	}	
+
+	
+	if(!function_exists('send_push_chat_notification_fcm'))
+	{
+			
+			function send_push_chat_notification_fcm($target, $data,$modeType='debugg')
+			{
+			
+				$url = 'https://fcm.googleapis.com/fcm/send';
+				$server_key = 'AIzaSyDJZwdZV7FTi9GxLSuIYLPFhyMfBm4RpHU';
+				
+				$fields 							= 	array();
+				$fields['data'] 					= 	$data;
+				$target			=	array_unique($target); 
+				
+				if(is_array($target)){
+					
+					$fields['registration_ids'] 		= 	$target;
+				
+				}else{
+					
+					$fields['to'] = $target;
+				}
+				
+				
+				
+				//header with content_type api key
+				
+			$headers = array(
+				'Content-Type:application/json',
+				'Authorization:key='.$server_key
+				);
+
+				$ch = curl_init();
+				curl_setopt($ch, CURLOPT_URL, $url);
+				curl_setopt($ch, CURLOPT_POST, true);
+				curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+				curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+				curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+				curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
+				$result = curl_exec($ch);
+				
+				//echo "<pre>";
+				//print_r($result);
+			
+			
+				if ($result === FALSE) {
+					
+					return curl_error($ch);
+					//die('FCM Send Error: ' . curl_error($ch));
+				
+				}else{
+				
+					return $result;
+				
+				}
+				
+				curl_close($ch);
+				return $result;
+		}
+	
+	}
+
+	
 		
 		
 		

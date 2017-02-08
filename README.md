@@ -1,2 +1,1 @@
-# CodeIgniter 2 project for PMP 
-
+#CodeIgniter 2 project for PMP.

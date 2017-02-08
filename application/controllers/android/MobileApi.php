@@ -3,6 +3,7 @@ date_default_timezone_set('Asia/kolkata');
 defined('BASEPATH') OR exit('No direct script access allowed');
 class MobileApi extends CI_Controller
 {
+
 	
 	function __construct()
     {
@@ -213,13 +214,10 @@ class MobileApi extends CI_Controller
 			
 			// User change the device and use regster contact number,   new otp  will send to the user mobile. 
 			// Device checking.. 
+		
+		if(isset($_REQUEST['isDataSaved'])){
 			
-			if(isset($_REQUEST['isDataSaved'])){
-				
 			if($_REQUEST['isDataSaved']==0){
-				
-				
-				
 				
 				$otp_code		=	$this->get_otp_number_random();
 				//Redirect to the profile page.
@@ -4436,11 +4434,9 @@ function get_attached_media($actionID=null,$attachementFor=null){
 			}
 		*/
 		
-	
 	}
 	//End..	
   
-	
 	function  marked_group_admin()
 	{
 	
@@ -4531,17 +4527,19 @@ function get_attached_media($actionID=null,$attachementFor=null){
 		echo json_encode(array('action'=>'success','message'=>'mark admin has been done succesfully.'));
 		die();	
 	}
+
+	########################################  MOM START ################################################
 	
-	##########################################  MOM START ###############################################################################
-	
-	function  create_mom(){
+	function  create_mom()
+	{
 		
 		if(isset($_REQUEST['userID'])){
-			
-			if($_REQUEST['userID']!=''){
+		
+			if($_REQUEST['userID']!='')
+			{
 				
 				$userID 			=	$_REQUEST['userID'];
-					
+			
 			}else{
 				
 				echo json_encode(array('action'=>'error','message'=>'Please send userID'));
@@ -4573,16 +4571,25 @@ function get_attached_media($actionID=null,$attachementFor=null){
 		if(isset($_REQUEST['momName'])){
 			
 			if($_REQUEST['momName']!=''){
-			
-				$momName 			=	$_REQUEST['momName'];
+				
+				if(strlen($_REQUEST['momName'])<51){
+				
+					$momName 					=	$_REQUEST['momName'];
+				
+				}else{
+					
+					echo json_encode(array('action'=>'error','message'=>'Max mom title should be 50 char long.'));
+					die();
+				}
 			
 			}else{
-			
+				
 				echo json_encode(array('action'=>'error','message'=>'Please send momName'));
 				die();
 			}
 		
 		}else{
+			
 			echo json_encode(array('action'=>'error','message'=>'Please send momName'));
 			die();
 		}
@@ -4591,10 +4598,18 @@ function get_attached_media($actionID=null,$attachementFor=null){
 			
 			if($_REQUEST['momDescription']!=''){
 			
-				$momDescription 			=	$_REQUEST['momDescription'];
+				if(strlen($_REQUEST['momDescription'])<251){
+				
+					$momDescription 					=	$_REQUEST['momDescription'];
+				
+				}else{
+					
+					echo json_encode(array('action'=>'error','message'=>'Max mom description should be 250 char long.'));
+					die();
+				}	
 			
 			}else{
-			
+				
 				echo json_encode(array('action'=>'error','message'=>'Please send momDescription'));
 				die();
 			}
@@ -4605,11 +4620,19 @@ function get_attached_media($actionID=null,$attachementFor=null){
 			die();
 		}
 	
-	if(isset($_REQUEST['momParticipant'])){
-	
+		if(isset($_REQUEST['momParticipant'])){
+			
 			if($_REQUEST['momParticipant']!=''){
-				
-				$momParticipant 			=	$_REQUEST['momParticipant']; //comma separated user ids.
+					
+					if(count(explode(",",$_REQUEST['momParticipant']))>250){
+						
+						echo json_encode(array('action'=>'error','message'=>'Please select max 250 participants.'));
+						die();
+					
+					}else{
+						
+						$momParticipant 			=	$_REQUEST['momParticipant']; //comma separated user ids.
+					}
 			
 			}else{
 				
@@ -4622,8 +4645,26 @@ function get_attached_media($actionID=null,$attachementFor=null){
 			echo json_encode(array('action'=>'error','message'=>'Please send mom participant'));
 			die();
 		}
-		
 	
+		$momParticipantCC		=	'';
+		
+		if(isset($_REQUEST['momParticipantCC'])){
+			
+			if($_REQUEST['momParticipantCC']!=''){
+			
+				if(count(explode(",",$_REQUEST['momParticipantCC']))>50){
+						
+						echo json_encode(array('action'=>'error','message'=>'Please select max 50 participants.'));
+						die();
+					
+				}else{
+					$momParticipantCC 			=	$_REQUEST['momParticipantCC']; //comma separated user ids.
+				}
+				
+			}
+			
+		}
+		
 		$saveData		=	array(
 									'momName'=>$momName,
 									'momDescription'=>$momDescription,
@@ -4632,16 +4673,431 @@ function get_attached_media($actionID=null,$attachementFor=null){
 								 );
 		
 		
-		if($this->mom_model->save_mom($saveData,$momParticipant)){
-			
+		if($this->mom_model->save_mom($saveData,$momParticipant,$momParticipantCC))
+		{
 			echo json_encode(array('action'=>'success','message'=>'mom has been created'));
 			die();
-		
 		}
 	
 	}
+
 	
-	##########################################  MOM END #################################################################################
+	
+	function add_participants(){
+		
+		//Add more participnat to the mom..
+		if(isset($_REQUEST['userID'])){
+			
+			if($_REQUEST['userID']!='')
+			{
+				
+				$userID 			=	$_REQUEST['userID'];
+			
+			}else{
+				
+				echo json_encode(array('action'=>'error','message'=>'Please send userID'));
+				die();
+			}
+			
+		}else{
+				echo json_encode(array('action'=>'error','message'=>'Please send userID'));
+				die();
+		}
+		
+		if(isset($_REQUEST['deviceID'])){
+			
+			if($_REQUEST['deviceID']!=''){
+					
+					$deviceID 			=	$_REQUEST['deviceID'];
+			
+			}else{
+				
+				echo json_encode(array('action'=>'error','message'=>'Please send deviceID'));
+				die();
+			}
+		
+		}else{
+			
+			echo json_encode(array('action'=>'error','message'=>'Please send deviceID'));
+			die();
+		}
+	
+		
+		if(isset($_REQUEST['momID'])){
+			
+			if($_REQUEST['momID']!=''){
+					
+					$momID 			=	$_REQUEST['momID'];
+			
+			}else{
+				
+				echo json_encode(array('action'=>'error','message'=>'Please send momID'));
+				die();
+			}
+		
+		}else{
+			
+			echo json_encode(array('action'=>'error','message'=>'Please send momID'));
+			die();
+		}
+		
+		
+		
+		
+		//End of the add more participant to the mom...
+	}
+	
+	
+	function add_observations(){
+	
+		
+		if(isset($_REQUEST['userID'])){
+		
+			if($_REQUEST['userID']!='')
+			{
+				
+				$userID 			=	$_REQUEST['userID'];
+			
+			}else{
+				
+				echo json_encode(array('action'=>'error','message'=>'Please send userID'));
+				die();
+			}
+			
+		}else{
+				echo json_encode(array('action'=>'error','message'=>'Please send userID'));
+				die();
+		}
+		
+		if(isset($_REQUEST['deviceID'])){
+			
+			if($_REQUEST['deviceID']!=''){
+					
+					$deviceID 			=	$_REQUEST['deviceID'];
+			
+			}else{
+				
+				echo json_encode(array('action'=>'error','message'=>'Please send deviceID'));
+				die();
+			}
+		
+		}else{
+			
+			echo json_encode(array('action'=>'error','message'=>'Please send deviceID'));
+			die();
+		}
+	
+		
+		if(isset($_REQUEST['momID'])){
+			
+			if($_REQUEST['momID']!=''){
+					
+					$momID 			=	$_REQUEST['momID'];
+			
+			}else{
+				
+				echo json_encode(array('action'=>'error','message'=>'Please send momID'));
+				die();
+			}
+		
+		}else{
+			
+			echo json_encode(array('action'=>'error','message'=>'Please send momID'));
+			die();
+		}
+	
+	
+		if(isset($_REQUEST['observationName'])){
+			
+			if($_REQUEST['observationName']!=''){
+					
+					$observationName 			=	$_REQUEST['observationName'];
+			
+			}else{
+				
+				echo json_encode(array('action'=>'error','message'=>'Please send observationName'));
+				die();
+			}
+		
+		}else{
+			
+			echo json_encode(array('action'=>'error','message'=>'Please send observationName'));
+			die();
+		}
+		
+		
+		if(isset($_REQUEST['observationDescription'])){
+		
+			if($_REQUEST['observationDescription']!=''){
+					
+					$observationDescription 			=	$_REQUEST['observationDescription'];
+			
+			}else{
+				
+				echo json_encode(array('action'=>'error','message'=>'Please send observationDescription'));
+				die();
+			}
+		
+		}else{
+			
+			echo json_encode(array('action'=>'error','message'=>'Please send observationDescription'));
+			die();
+		}
+	
+		$SavingData		=	array(
+									'createdBy'=>$userID,
+									'momID'=>$momID,
+									'observationName'=>$observationName,
+									'observationDescription'=>$observationDescription,
+									'createdDate'=>date('Y-m-d H:i:s')
+									);
+		
+		
+		if($this->mom_model->add_mom_observations($SavingData))
+		{
+			echo json_encode(array('action'=>'error','message'=>'Mom observation has been added succesfully.'));
+			die();
+		}
+	
+	}
+
+	//Create task  in  a mom... 
+	function create_task_in_a_mom()
+	{
+		
+		$postForm			=	$_REQUEST;
+		$validationArr		=  array();
+		
+		if(isset($_REQUEST['momID']) && $_REQUEST['momID']!=''){
+			
+			$momID					=	$_REQUEST['momID'];
+		
+		}else{
+			
+			$validationArr[]			=	"Please send group  id";
+	   }
+		
+		if(isset($postForm['taskName'])){
+			
+			if($postForm['taskName']==''){
+						
+					$validationArr[]			=	 array('action'=>'error', 'message'=>'Please enter task name.'); // it will save into task table.
+				
+				}else{
+					
+					if(taskNameValidation($postForm['taskName']))
+					{
+						$validationArr[]			=	 array('action'=>'error', 'message'=>'The task name can be a mix of text with Numeric / special characters but not only numeric/special characters.');
+					}
+				}
+		
+		}else{
+		
+			$validationArr[]			=	 array('action'=>'error', 'message'=>'Please send taskName to the server.'); // it will 
+		}
+		
+		if(isset($postForm['orginatorID']))
+		{
+			
+			if($postForm['orginatorID']==''){
+				$validationArr[]			=	 array('action'=>'error', 'message'=>'orginator id is not comming.');
+				//it will save into task table.
+			}
+		
+		}else{
+			
+			$validationArr[]			=	 array('action'=>'error', 'message'=>'Please send orginatorID to the server.');
+		}
+	
+		if(isset($postForm['taskDescription']))
+		{	
+			
+			if($postForm['taskDescription']==''){
+				$validationArr[]			=	 array('action'=>'error', 'message'=>'Please enter task description.');
+			}
+		
+		}else{
+			
+			$validationArr[]			=	 array('action'=>'error', 'message'=>'Please send taskDescription to the server.');
+		}
+		
+		if(isset($postForm['startDate']) && $postForm['startDate']){
+			
+				$postForm['startDate']		=	$postForm['startDate'];
+				//$validationArr[]			=	 array('action'=>'error', 'message'=>'Please enter select task start date.');
+		}else{
+			
+			$postForm['startDate']		=	date('Y-m-d');			
+		}
+		
+		if(isset($postForm['dueDate'])){
+			
+			if($postForm['dueDate']==''){
+				
+				$validationArr[]			=	 array('action'=>'error', 'message'=>'Please enter select task due date.');
+			}
+		
+		}else{
+			
+			$validationArr[]			=	 array('action'=>'error', 'message'=>'Pleas send dueDate to the sever.');
+		}
+		
+		if(isset($postForm['toUsers']))
+		{
+		
+			if($postForm['toUsers']==''){
+				
+				$validationArr[]			=	 array('action'=>'error', 'message'=>'Please slect reciver.');
+			
+			}else{
+				
+				$toUsers		=	explode(",",$postForm['toUsers']);// it will  save in to reciver table with Task ID.
+				$toUsers 		= 	array_filter($toUsers); 
+			}
+		}else{
+			
+			$validationArr[]			=	 array('action'=>'error', 'message'=>'Please send toUsers to the server.');
+		}
+		
+		if(isset($postForm['ccUsers']))
+		{
+			
+			if($postForm['ccUsers']==''){
+					
+					$ccUser 		= array();
+			
+				}else{
+						$ccUser			=	explode(",",$postForm['ccUsers']);// it will save in to carbon copy table with task id.
+						$ccUser 		= 	array_filter($ccUser); 
+			}
+		
+		}else{
+			
+			$validationArr[]			=	 array('action'=>'error', 'message'=>'Please send ccUsers to the server.');
+		}		
+	
+		if(!isset($postForm['tags'])){
+			
+			$validationArr[]			=	 array('action'=>'error', 'message'=>'Please send tag param tags');
+		}
+		
+		$taskType			=	0; //defualt - Main Task.
+		
+		if(count($validationArr)>0)
+		{
+		
+			echo json_encode($validationArr);
+			die();
+		}
+	
+		if(isset($postForm['taskType'])){
+			
+			$taskType			=	 $postForm['taskType'];
+		}
+		
+		if(isset($postForm['status'])){
+			$status			=	 $postForm['status'];
+			
+		}else{
+				$status			=	 0;
+		}
+			
+			if(isset($postForm['functionalityType'])){
+			
+				$functionalityType				=	$postForm['functionalityType'];
+
+			}else{
+				
+				$functionalityType				=	0;
+			
+			
+			if(count($toUsers)==1){
+				
+				//Task for self or  individual.
+				if($toUsers[0]==$postForm['orginatorID']){
+					//self / My To Do.
+					$functionalityType		=	0;
+				
+				}else{
+					
+					//Induvidual	
+					$functionalityType		=	1;
+				}
+			
+			}else{
+					// Task for Team -  multiple reciver- Team.
+					$functionalityType				=	2;
+			}
+		
+		}
+	
+		if(count($validationArr)>0){
+			
+			echo json_encode($validationArr);
+			die();
+		
+		}else{
+			
+			$Tags 			=	array();
+			
+			if(isset($postForm['tags']) && $postForm['tags']!=''){
+				
+				
+				$strTags 		=	str_replace("[", "" , $postForm['tags']);
+				$strTags 		=	str_replace("]", "" , $strTags);
+				$Tags 			=	explode(",", $strTags);
+				$TagsJson		=	json_encode(array_filter($Tags));
+			
+			}else{
+				
+				$TagsJson		=	'';
+			}
+			
+			//Saving data into task table.
+			$saveData			=	array(
+											'taskName'=>$postForm['taskName'],
+											'taskDescription'=>$postForm['taskDescription'],
+											'orginatorID'=>$postForm['orginatorID'],
+											'ccID'=>$postForm['ccUsers'],
+											'recieverID'=>$postForm['toUsers'],
+											'tagID'=>$postForm['tags'],
+											'taskTags'=>$TagsJson,
+											'status'=>$status,
+											'funtionalityType'=>'4',
+											'funcationlityTypeID'=>$momID,
+											'allotmentDate'=>$postForm['startDate'],
+											//'allotmentDate'=>date('Y-m-d'),
+											'dueDate'=>$postForm['dueDate']
+			);
+			
+			if($this->db->insert($this->db->dbprefix('api_tasks'),$saveData))
+			{
+				$taskID	=	$this->db->insert_id();
+				$this->assign_task_to_reciver($taskID,$toUsers);
+				$this->assign_task_cc_reciver($taskID,$ccUser);
+				
+				if($postForm['tags']!=''){
+					
+					$this->map_task_tags($taskID,$Tags,$postForm['orginatorID']);
+				}
+				
+				$this->load->model('tasks_model');
+				$TaskDetail			=	 $this->tasks_model->get_task_detail($taskID);
+				$action				=	"Task '".$postForm['taskName']."' was created by ".$TaskDetail->firstName." ".$TaskDetail->lastName;
+				
+				echo json_encode(array('action'=>'success', 'message'=>'Task has been  created successfully.', "taskID"=>$taskID));
+			
+				$this->set_task_log($taskID , $postForm['orginatorID'],$action, $TaskDetail,'New Task is created in a group' );
+			}
+		
+		}//End of valid data block.
+	}
+
+	
+	function get_mom_list(){}
+	function get_mom_detail(){}
+	
+	################################ MOM END ####################################################
   
 }
 //End of class.

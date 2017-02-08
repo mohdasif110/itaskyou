@@ -88,17 +88,17 @@
 		  </h3>
 		  </div>
          <div class="panel-body">
-			<!-- {"as_orginator":{"task":{"re_assign":true,"ratting":true}},"as_reciever":{"task":{"re_assign":true,"ratting":false}}} -->
-			<ul id="settingCheckbox" >
+			<ul class="list-unstyled list-group  ul_body" id="settingCheckbox" >
 				<li ng-repeat=" (k1,v1) in AppAccessFlag">
-					<span ng-bind="k1"></span>
-						<ul>
+					<span  style="text-transform: capitalize;" ng-bind="k1.replace('_',' ')"></span>
+						<ul class="list-unstyled ul_body">
 							<li ng-repeat="(k2 ,v2) in v1">
 								<span>
-									<span ng-bind="k2"></span>
-										<ul>
+									<span style="text-transform: capitalize;" ng-bind="k2.replace('_',' ')"></span>
+										<ul class="list-unstyled ul_body">
 										<li ng-repeat="(k3,v3) in v2 ">
-										<b>{{k3}}:</b> <input type="checkbox" name="{{k1}}.{{k2}}.{{k3}}" ng-modal="{{k1}}.{{k2}}.{{k3}}"   ng-checked="{{v3}}" />
+										 <span  style="text-transform: capitalize;" ng-bind="k3.replace('_',' ')"></span>
+										<input type="checkbox" name="{{k1}}_{{k2}}_{{k3}}" ng-modal="{{k1}}_{{k2}}_{{k3}}" value="{{v3}}"  ng-checked="{{v3}}" />
 										</li>
 									</ul>
 								</span>
@@ -107,6 +107,10 @@
 				</li>
 		</ul>
 		</div>
+		-- {{as_orginator_task_re_assign}}-- 
+		
+		{{arrValue}}
+		
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
 					<a href="javascript:;" class="btn btn-primary"  ng-click="updateSettings()">Save</a>
@@ -131,5 +135,12 @@
 		padding:6px 3px 6px;
 		color:#000;
 	}
+
+
+.ul_body {
+	padding-left: 20px !important; 
+    list-style: none;
+}	
+	
 </style>
 

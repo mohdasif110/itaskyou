@@ -24,7 +24,7 @@
 				<tr dir-paginate="group in tags|filter:search|itemsPerPage:6">
 				<td>
 					<img  class="img-thumbnail" style="width:50px;height:50px" src="{{group.groupPhoto}}" alt="...">
-						<span ng-bind="group.groupName"></span>
+					<span ng-bind="group.groupName"></span>
 				</td>
 				<!--td> 
 					<img  style="width:50px;height:50px" src="{{group.userPhoto}}" alt="..." class=" img-thumbnail img-circle">
@@ -37,8 +37,7 @@
 					<span ng-bind="group.firstName"></span>
 					<span ng-bind="group.lastName"></span>
 			</td>
-				
-				<td ng-bind="group.createdDate"></td>
+			<td ng-bind="group.createdDate"></td>
 						<td ng-bind="group.modifiedDate"></td>
 						<td>
 						<span ng-if="group.status==1" >
@@ -149,13 +148,8 @@
 										<span ng-if="menberData.subType!=null">
 											/ <span ng-bind="menberData.subType"></span>
 										</span>
-										
-										
 									</td>
-								
-								
-								
-									<td style="width:30%;">
+								   <td style="width:30%;">
 										
 										<span ng-if="menberData.is_admin==1" >
 											
@@ -168,7 +162,6 @@
 											</span>
 										
 										</span>
-									
 									</td>
 							</tr>
                      </tbody>

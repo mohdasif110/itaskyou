@@ -9,7 +9,6 @@ class Itaskyou extends CI_Controller {
 		$this->load->model('chat_model');
 	}
 
-	
 	//send message to the recievers..
 	function send_message(){
 		
@@ -212,12 +211,6 @@ class Itaskyou extends CI_Controller {
 	}
 	//End Read message..
 
-	function chat_fcm_notification(){
-		
-		
-	
-	}
-	
 	
 }
 

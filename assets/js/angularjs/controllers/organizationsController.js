@@ -1,4 +1,4 @@
-itaskyou.controller('usersController', function($scope,$http, admin_base_url,growl) {
+itaskyou.controller('organizationsController', function($scope,$http, admin_base_url,growl) {
 
 
 	var vm = this;
@@ -14,7 +14,7 @@ itaskyou.controller('usersController', function($scope,$http, admin_base_url,gro
 	
 	}
 
-	var controllerName		=	"users";
+	var controllerName		=	"organizations";
 	// Get Records.
 	$scope.get_records		=	function()
 	{
